@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLPromotions.info</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https:">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" href="mainlogo.png" type="image/png">
+    <link rel="apple-touch-icon" href="mainlogo.png">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; connect-src https://www.google-analytics.com https://region1.google-analytics.com; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; upgrade-insecure-requests">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GDZ002F9VT"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -12,7 +15,7 @@
     gtag('js', new Date());
 
     gtag('config', 'G-GDZ002F9VT');
-    </script>>
+    </script>
     <style>
         * {
             margin: 0;
@@ -28,6 +31,13 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Improved keyboard focus visibility */
+        :focus-visible {
+            outline: 2px solid #ffff00;
+            outline-offset: 3px;
+            border-radius: 6px;
         }
 
         .subtle-grid {
@@ -66,6 +76,12 @@
             50% { transform: scale(1.1) rotate(1deg); }
         }
 
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+            .subtle-grid, .ambient-glow { animation: none !important; }
+        }
+
         nav {
             position: fixed;
             top: 0;
@@ -75,6 +91,7 @@
             backdrop-filter: blur(20px) saturate(180%);
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 0, 0.1);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.35);
         }
 
         .nav-container {
@@ -117,6 +134,11 @@
             transform: translateY(-1px);
         }
 
+        .nav-links a.active {
+            color: #ffff00;
+            background: rgba(255, 255, 0, 0.1);
+        }
+
         .hamburger {
             display: none;
             flex-direction: column;
@@ -138,6 +160,7 @@
             padding: 120px 40px 80px;
             max-width: 1200px;
             margin: 0 auto;
+            scroll-margin-top: 100px; /* offset for fixed nav */
         }
 
         .hero {
@@ -207,10 +230,19 @@
             letter-spacing: -1px;
         }
 
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 96px;
+            height: 1px;
+            margin: 16px auto 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 0, 0.6), transparent);
+        }
+
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
+            grid-template-columns: 1fr; /* stack vertically */
+            gap: 28px;
             margin-top: 40px;
         }
 
@@ -569,7 +601,7 @@
 
             .cards-grid {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 20px;
             }
 
             .gallery-grid {
@@ -765,7 +797,7 @@
     <nav>
         <div class="nav-container">
             <a href="#home" class="logo">CL PROMOTIONS</a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="primary-navigation">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#upcoming">Upcoming</a></li>
                 <li><a href="#previous">Previous</a></li>
@@ -774,13 +806,15 @@
                 <li><a href="#contact">Contact Us</a></li>
 
             </ul>
-            <div class="hamburger" onclick="toggleMenu()">
+            <div class="hamburger" aria-controls="primary-navigation" aria-expanded="false" aria-label="Toggle navigation" role="button" tabindex="0">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
         </div>
     </nav>
+
+        <a class="skip-link" href="#home">Skip to content</a>
 
     <section id="home" class="hero">
         <div class="hero-content">
@@ -798,23 +832,35 @@
         <div class="cards-grid">
             <div class="card gig-card fade-in">
                 <div class="gig-image">
-                    <span>⚡</span>
+                    <span>🎤</span>
                 </div>
                 <div class="gig-info">
-                    <div class="gig-date">Friday 25th JULY 2025</div>
-                    <div class="gig-band">Raidax</div>
-                    <div class="gig-venue">Live @ STEREO : SUPPORT FROM WHISSKER + PIRAH + NEEDLENOSE</div>
-                    <div class="gig-price">£10.00 + BF</div>
-                    <a href="https://www.skiddle.com/e/41043829" class="management-contact">Tickets</a> 
+                    <div class="gig-date">18th December 2025</div>
+                    <div class="gig-band">????</div>
+                    <div class="gig-venue">?????</div>
+                    <div class="gig-price">£10</div>
                 </div>
-                <div class="promo-poster" style="background-image: url('https://d31fr2pwly4c4s.cloudfront.net/d/f/f/2032515_2e52cd79_raidax-stereo-glasgow-25-7-25_eflyer.jpg');"></div>
+                <div class="promo-poster" style="background-image: url('mainlogo.png')"></div>
             </div>
+
         </div>
     </section>
 
     <section id="previous">
         <h2 class="section-title">Previous Gigs</h2>
         <div class="cards-grid">
+            <div class="card gig-card fade-in">
+                <div class="gig-image">
+                    <span>⚡</span>
+                </div>
+                <div class="gig-info">
+                    <div class="gig-date">Friday 25th JULY 2025</div>
+                    <div class="gig-band">Raidax</div>
+                    <div class="gig-venue">Live @ STEREO : SUPPORT FROM WHISSKER + PIRAH</div>
+                    <div class="gig-price">SOLD OUT</div>
+                </div>
+                <div class="promo-poster" style="background-image: url('https://d31fr2pwly4c4s.cloudfront.net/d/f/f/2032515_2e52cd79_raidax-stereo-glasgow-25-7-25_eflyer.jpg');"></div>
+            </div>
             <div class="card gig-card fade-in">
                 <div class="gig-image">
                     <span>🎤</span>
@@ -855,7 +901,7 @@
     <section id="contact">
         <h2 class="section-title">Contact Us</h2>
         <div class="contact-grid">
-            <a href="https://www.instagram.com/cl.promotions/" class="contact-card" target="_blank">
+            <a href="https://www.instagram.com/cl.promotions/" class="contact-card" target="_blank" rel="noopener noreferrer">
                 <div class="contact-icon">📸</div>
                 <h3>Follow Us</h3>
                 <p>@cl.promotions</p>
@@ -882,11 +928,18 @@
         </div>
     </footer>
 
+    <button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top" style="display:none">↑</button>
+
     <script>
-        function toggleMenu() {
+    function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
+            const burger = document.querySelector('.hamburger');
+            const isActive = navLinks.classList.toggle('active');
+            burger.setAttribute('aria-expanded', isActive);
         }
+
+    // Click binding for hamburger (no inline handlers)
+    document.querySelector('.hamburger')?.addEventListener('click', toggleMenu);
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -900,7 +953,10 @@
                     });
                 }
                 // Close mobile menu after clicking
-                document.querySelector('.nav-links').classList.remove('active');
+                const nav = document.querySelector('.nav-links');
+                const burger = document.querySelector('.hamburger');
+                nav.classList.remove('active');
+                burger.setAttribute('aria-expanded', 'false');
             });
         });
 
@@ -924,6 +980,52 @@
             card.style.animationPlayState = 'paused';
             observer.observe(card);
         });
+
+        // Keyboard support for hamburger
+        const hamburger = document.querySelector('.hamburger');
+        if (hamburger) {
+            hamburger.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleMenu();
+                }
+            });
+        }
+
+        // Inject minimal styles for skip-link and back-to-top
+        (function(){
+            const style = document.createElement('style');
+            style.textContent = `
+                .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+                .skip-link:focus{left:16px;top:16px;width:auto;height:auto;padding:8px 12px;background:#000;color:#ffff00;border:1px solid rgba(255,255,0,0.5);border-radius:8px;z-index:2000}
+                .back-to-top{position:fixed;right:20px;bottom:24px;background:rgba(0,0,0,0.7);color:#ffff00;border:1px solid rgba(255,255,0,0.4);border-radius:24px;padding:10px 12px;cursor:pointer;opacity:0;transform:translateY(10px);transition:all .25s ease;backdrop-filter:saturate(140%) blur(6px);display:none}
+                .back-to-top.show{opacity:1;transform:translateY(0);display:block}
+            `;
+            document.head.appendChild(style);
+        })();
+
+        // Scrollspy and back-to-top
+        const sections = Array.from(document.querySelectorAll('section[id]'));
+        const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                const link = navLinks.find(a => a.getAttribute('href') === `#${id}`);
+                if (!link) return;
+                if (entry.isIntersecting) {
+                    navLinks.forEach(a => a.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        }, { threshold: 0.6 });
+        sections.forEach(s => sectionObserver.observe(s));
+
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) backToTop.classList.add('show');
+            else backToTop.classList.remove('show');
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     </script>
 </body>
 </html>
